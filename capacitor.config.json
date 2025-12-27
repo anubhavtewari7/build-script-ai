@@ -1,0 +1,15 @@
+
+{
+  "appId": "com.buildscript.ai.app",
+  "appName": "BuildScript",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "allowNavigation": ["*"]
+  },
+  "android": {
+    "allowMixedContent": true,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": true
+  }
+}

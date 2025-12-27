@@ -1,0 +1,9 @@
+
+{
+  "name": "BuildScript V2.4",
+  "description": "Professional-grade vehicle intelligence and diagnostic platform. Build, track, and maintain your vehicle with precision AI.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ]
+}
