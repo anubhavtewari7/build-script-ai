@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     define: {
-      'process.env.API_KEY': JSON.stringify(env.API_KEY || process.env.API_KEY)
+      'process.env.API_KEY': JSON.stringify(env.API_KEY || process.env.API_KEY || '')
     }
   };
 });

@@ -2,14 +2,12 @@
 import { GoogleGenAI, Type, GenerateContentResponse } from "@google/genai";
 import { DiagnosticResult, Vehicle, Modification } from "../types";
 
-// Robustly check for the API key in both process.env and vite's import.meta.env
+// Always use process.env.API_KEY which is defined by Vite in vite.config.ts
 export const getGeminiClient = () => {
-  const apiKey = (typeof process !== 'undefined' && process.env?.API_KEY) || 
-                 (import.meta as any).env?.VITE_API_KEY || 
-                 (window as any).process?.env?.API_KEY;
+  const apiKey = process.env.API_KEY || (window as any).process?.env?.API_KEY;
 
   if (!apiKey) {
-    console.error("CRITICAL: API_KEY is missing from environment variables.");
+    console.error("API_KEY is missing. Check Vercel environment variables.");
     throw new Error("API_KEY_MISSING");
   }
   return new GoogleGenAI({ apiKey });
