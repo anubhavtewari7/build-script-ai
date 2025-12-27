@@ -1,16 +1,16 @@
 
 import React, { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import Navigation from './components/Navigation';
-import Dashboard from './pages/Dashboard';
-import DiagnosticTool from './pages/DiagnosticTool';
-import AIChat from './pages/AIChat';
-import Maintenance from './pages/Maintenance';
-import Profile from './pages/Profile';
-import Shop from './pages/Shop';
-import Welcome from './pages/Welcome';
-import Modifications from './pages/Modifications';
-import { Vehicle, SubscriptionTier } from './types';
+import Navigation from './components/Navigation.tsx';
+import Dashboard from './pages/Dashboard.tsx';
+import DiagnosticTool from './pages/DiagnosticTool.tsx';
+import AIChat from './pages/AIChat.tsx';
+import Maintenance from './pages/Maintenance.tsx';
+import Profile from './pages/Profile.tsx';
+import Shop from './pages/Shop.tsx';
+import Welcome from './pages/Welcome.tsx';
+import Modifications from './pages/Modifications.tsx';
+import { Vehicle, SubscriptionTier } from './types.ts';
 import { AlertCircle, RefreshCcw } from 'lucide-react';
 
 const INITIAL_VEHICLE: Vehicle = {
