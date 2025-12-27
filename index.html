@@ -15,6 +15,12 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Safety Shim: Prevents "process is not defined" errors in browser -->
+    <script>
+        window.process = { env: { API_KEY: "" } };
+    </script>
+
     <style>
         :root {
             --sat: env(safe-area-inset-top);
@@ -78,7 +84,6 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Prevent scroll elastic bounce on iOS if desired, but keep for natural feel */
         .overscroll-none { overscroll-behavior: none; }
     </style>
 <script type="importmap">
