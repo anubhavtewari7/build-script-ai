@@ -11,6 +11,7 @@ import Shop from './pages/Shop';
 import Welcome from './pages/Welcome';
 import Modifications from './pages/Modifications';
 import { Vehicle, SubscriptionTier } from './types';
+import { AlertCircle, RefreshCcw } from 'lucide-react';
 
 const INITIAL_VEHICLE: Vehicle = {
   id: '1',
@@ -23,9 +24,15 @@ const INITIAL_VEHICLE: Vehicle = {
 };
 
 const App: React.FC = () => {
+  const [hasError, setHasError] = useState(false);
+
   const [vehicles, setVehicles] = useState<Vehicle[]>(() => {
-    const saved = localStorage.getItem('bs_vehicles');
-    return saved ? JSON.parse(saved) : [INITIAL_VEHICLE];
+    try {
+      const saved = localStorage.getItem('bs_vehicles');
+      return saved ? JSON.parse(saved) : [INITIAL_VEHICLE];
+    } catch (e) {
+      return [INITIAL_VEHICLE];
+    }
   });
   
   const [activeVehicleId, setActiveVehicleId] = useState<string>(() => {
@@ -41,7 +48,11 @@ const App: React.FC = () => {
   });
   
   useEffect(() => {
-    localStorage.setItem('bs_vehicles', JSON.stringify(vehicles));
+    try {
+      localStorage.setItem('bs_vehicles', JSON.stringify(vehicles));
+    } catch (e) {
+      console.error("Storage error", e);
+    }
   }, [vehicles]);
 
   useEffect(() => {
@@ -78,6 +89,26 @@ const App: React.FC = () => {
     setActiveVehicleId(newVehicle.id);
   };
 
+  if (hasError) {
+    return (
+      <div className="min-h-screen bg-slate-950 flex items-center justify-center p-8 text-center">
+        <div className="space-y-6 max-w-xs">
+          <div className="w-20 h-20 bg-red-500/10 rounded-full flex items-center justify-center mx-auto">
+            <AlertCircle size={40} className="text-red-500" />
+          </div>
+          <h1 className="text-white font-black text-xl uppercase tracking-tighter">System Critical Error</h1>
+          <p className="text-slate-400 text-xs font-medium">The diagnostic terminal encountered a runtime exception.</p>
+          <button 
+            onClick={() => window.location.reload()}
+            className="w-full bg-indigo-600 text-white py-4 rounded-2xl font-black uppercase text-[10px] tracking-widest flex items-center justify-center gap-3"
+          >
+            <RefreshCcw size={16} /> Re-Initialize
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (!isInitialized) {
     return (
       <div className="max-w-md mx-auto shadow-2xl">
@@ -87,7 +118,7 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen pb-20 max-w-md mx-auto bg-slate-50 shadow-xl ring-1 ring-slate-900/5">
+    <div className="min-h-screen pb-20 max-w-md mx-auto bg-slate-50 shadow-xl ring-1 ring-slate-900/5 overflow-x-hidden">
       <Routes>
         <Route path="/" element={<Dashboard vehicle={activeVehicle} onUpdateVehicle={updateVehicle} />} />
         <Route path="/diagnostics" element={<DiagnosticTool vehicle={activeVehicle} />} />
@@ -116,3 +147,4 @@ const App: React.FC = () => {
 };
 
 export default App;
+
