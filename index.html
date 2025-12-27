@@ -16,9 +16,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@500&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     
-    <!-- Safety Shim: Prevents "process is not defined" errors in browser -->
     <script>
-        window.process = { env: { API_KEY: "" } };
+        // Fallback for process.env if build tool doesn't inject it
+        window.process = window.process || { env: {} };
     </script>
 
     <style>
@@ -36,71 +36,41 @@
             overflow-x: hidden;
             width: 100vw;
             min-height: 100vh;
+            color: white;
         }
         
-        /* Custom Native-Feel Animations */
         @keyframes page-fade {
             from { opacity: 0; transform: translateY(8px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes slide-right {
-            from { transform: translateX(-100%); }
-            to { transform: translateX(0); }
-        }
-        @keyframes slide-left {
-            from { transform: translateX(100%); }
-            to { transform: translateX(0); }
-        }
-        @keyframes scale-in {
-            from { transform: scale(0.95); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-        @keyframes pulse-soft {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.05); opacity: 0.8; }
-        }
-
         .animate-page { animation: page-fade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .animate-scale { animation: scale-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .animate-pulse-soft { animation: pulse-soft 2s infinite ease-in-out; }
-        
-        .stagger-1 { animation-delay: 0.1s; }
-        .stagger-2 { animation-delay: 0.15s; }
-        .stagger-3 { animation-delay: 0.2s; }
-        .stagger-4 { animation-delay: 0.25s; }
-
         .mono { font-family: 'JetBrains Mono', monospace; }
         .script-logo { font-family: 'Dancing Script', cursive; }
-        
-        .glass {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
         .gold-text {
             background: linear-gradient(135deg, #fbbf24 0%, #d97706 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-
-        .overscroll-none { overscroll-behavior: none; }
     </style>
 <script type="importmap">
 {
   "imports": {
-    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
-    "recharts": "https://esm.sh/recharts@^3.6.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
     "@google/genai": "https://esm.sh/@google/genai@^1.34.0",
-    "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0"
+    "recharts": "https://esm.sh/recharts@^3.6.0",
+    "react-router-dom": "https://esm.sh/react-router-dom@^7.11.0",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
+    "vite": "https://esm.sh/vite@^7.3.0"
   }
 }
 </script>
 </head>
 <body class="select-none">
     <div id="root"></div>
+    <!-- Explicitly load the main script entry point -->
+    <script type="module" src="/index.tsx"></script>
 </body>
 </html>
